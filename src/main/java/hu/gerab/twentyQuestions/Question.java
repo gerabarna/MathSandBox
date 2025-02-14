@@ -33,7 +33,7 @@ public class Question {
     }
 
     public boolean ask(int number, Progress p) {
-        final boolean answer = contains(number, false, p.registerQuestion());
+        final boolean answer = contains(number, p.registerQuestion());
         System.out.print(this);
         p.eliminateExcludedNumbers(numbers, answer);
         Question followUp = getFollowUp();
@@ -43,7 +43,7 @@ public class Question {
         return answer;
     }
 
-    public boolean contains(int number, boolean canLie, boolean forceLie) {
+    public boolean contains(int number, boolean lie) {
         if (number == 0) {
             throw new IllegalArgumentException();
         }
@@ -56,7 +56,7 @@ public class Question {
         }
         this.number = number;
         final boolean contains = numbers.contains(number);
-        lied = forceLie | (canLie & Math.random() % 2 == 0);
+        lied = lie;
         answer = lied ^ contains;
         return answer;
     }
